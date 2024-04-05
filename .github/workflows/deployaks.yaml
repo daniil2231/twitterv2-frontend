@@ -1,4 +1,4 @@
-name: aks
+name: deployaks
 "on":
     push:
         branches:
@@ -43,5 +43,5 @@ jobs:
               name: Deploys application
               with:
                 action: deploy
-                images: daniil2231/twitterv2:frontend
+                images: daniil2231/twitterv2
                 manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
