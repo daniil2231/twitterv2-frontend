@@ -43,5 +43,5 @@ jobs:
               name: Deploys application
               with:
                 action: deploy
-                images: daniil2231/twitterv2
+                images: daniil2231/twitterv2:frontend
                 manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
