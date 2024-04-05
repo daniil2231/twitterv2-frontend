@@ -44,5 +44,5 @@ jobs:
               name: Deploys application
               with:
                 action: deploy
-                images: tendeza/sem6-frontend
+                images: daniil2231/twitterv2
                 manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
