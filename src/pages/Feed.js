@@ -1,24 +1,29 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import TweetServices from "../services/TweetServices";
+// import TweetServices from "../services/TweetServices";
 
-function Test() {
+function Feed() {
   const [tweets, setTweets] = useState([]);
 
   useEffect(() => {
-    TweetServices.getAllTweets().then((response) => {
-      setTweets(response);
-    });
+    // setTweets(TweetServices.getAllTweets());
+    // console.log(tweets);
+
+    fetch("/Tweet")
+      .then((response) => response.json())
+      .then((response) => {
+        console.log(response);
+        setTweets(response);
+      });
   }, []);
-  console.log(tweets);
 
   return (
     <div>
       {tweets.map((tweet) => (
-        <li key={tweet.id}>{tweet.content}</li>
+        <li key={tweet.tweetername}>{tweet.content}</li>
       ))}
     </div>
   );
 }
 
-export default Test;
+export default Feed;

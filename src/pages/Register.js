@@ -9,12 +9,20 @@ function Login() {
     username: "",
     password: "",
   });
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleCheckboxChange = (event) => {
+    event.preventDefault();
+    if (isChecked) {
+      console.log("Form submitted");
+    } else {
+      alert("Please agree to the privacy policy.");
+    }
+  };
 
   const { username, password } = user;
 
   let navigate = useNavigate();
-  const [show, setShow] = useState(false);
-  // const [loading, setLoading] = useState(false);
 
   const onInputChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -23,31 +31,9 @@ function Login() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // FOR WHEN LOGIN IS FINISHED
-    // AuthServices.login(user).then((response) => {
-    //   console.log(response);
-    //   const accessToken = response.accessToken;
-    //   const role = response.role;
-    //   if (role === "user") {
-    //     navigate("/feed");
-    //   } else if (role === "moderator") {
-    //     navigate("/mod");
-    //   } else if (role === "admin") {
-    //     navigate("/admin");
-    //   }
-    // });
-
-    AuthServices.login(username).then((response) => {
+    AuthServices.register(username, password).then((response) => {
       console.log(response);
-      //const accessToken = response.accessToken;
-      const role = response.role;
-      if (role === "user") {
-        navigate("/feed");
-      } else if (role === "moderator") {
-        navigate("/mod");
-      } else if (role === "admin") {
-        navigate("/admin");
-      }
+      navigate("login");
     });
   };
 
@@ -55,20 +41,7 @@ function Login() {
     <Form className="shadow p-4 bg-white rounded" onSubmit={handleSubmit}>
       {/* Header */}
       <img className="img-thumbnail mx-auto d-block mb-2" alt="logo" />
-      <div className="h4 mb-2 text-center">Sign In</div>
-      {/* ALert */}
-      {show ? (
-        <Alert
-          className="mb-2"
-          variant="danger"
-          onClose={() => setShow(false)}
-          dismissible
-        >
-          Incorrect username or password.
-        </Alert>
-      ) : (
-        <div />
-      )}
+      <div className="h4 mb-2 text-center">Sign Up</div>
       <Form.Group className="mb-2" controlId="username">
         <Form.Label>Username</Form.Label>
         <Form.Control
@@ -91,19 +64,31 @@ function Login() {
           required
         />
       </Form.Group>
-      <Form.Group className="mb-2" controlId="checkbox">
-        <Form.Check type="checkbox" label="Remember me" />
-      </Form.Group>
-      <Button className="w-100" variant="primary" type="submit">
-        Log In
+      <div className="checkbox">
+        <input
+          type="checkbox"
+          name="agreement"
+          value="accepted"
+          onChange={handleCheckboxChange}
+          checked={isChecked}
+        />
+        I agree to the <a href="/privacyagreement">privacy policy</a>
+      </div>
+      <Button
+        className="w-100"
+        variant="primary"
+        type="submit"
+        disabled={!isChecked}
+      >
+        Register
       </Button>
       <div className="d-grid justify-content-end">
         <Button
           className="text-muted px-0"
           variant="link"
-          onClick={handleSubmit}
+          onClick={() => navigate("/login")}
         >
-          Forgot password?
+          Already have an account? Login here!
         </Button>
       </div>
     </Form>
