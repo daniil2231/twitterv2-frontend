@@ -101,7 +101,7 @@ function Login() {
         <Button
           className="text-muted px-0"
           variant="link"
-          onClick={handleSubmit}
+          onClick={() => navigate("/register")}
         >
           No account yet? Register here!
         </Button>
